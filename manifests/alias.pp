@@ -2,10 +2,13 @@
 #
 # == Example
 #
-#     kmod::alias { 'bond0':
-#       alias => 'bonding',
-#     }
+#      kmod::alias { 'bond0':
+#        alias => 'bonding',
+#      }
 #
+#
+
+
 define kmod::alias(
   $source,
   $ensure = 'present',
@@ -33,7 +36,7 @@ define kmod::alias(
     }
 
     absent: {
-      kmod::load { $module:
+      kmod::load { $::module:
         ensure => $ensure,
       }
 

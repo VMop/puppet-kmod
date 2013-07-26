@@ -1,18 +1,17 @@
-/*
 
-== Definition: kmod::load
-
-Manage a kernel module in /etc/modules.
-
-Parameters:
-- *ensure*: present/absent;
-- *file*: optionally, set the file where the stanza is written.
-
-Example usage:
-
-  kmod::load { 'sha256': }
-
-*/
+# Definition: kmod::load
+#
+# Manage a kernel module in /etc/modules.
+#
+# Parameters:
+# - *ensure*: present/absent;
+# - *file*: optionally, set the file where the stanza is written.
+#
+# Example usage:
+#
+#   kmod::load { 'sha256': }
+#
+#
 
 define kmod::load(
   $ensure=present,
@@ -50,9 +49,10 @@ define kmod::load(
     'RedHat': {
       file { "/etc/sysconfig/modules/${name}.modules":
         ensure  => $ensure,
-        mode    => 0755,
+        mode    => '0755',
         content => template('kmod/redhat.modprobe.erb'),
       }
     }
+    default: { fail("Module ${module_name} is not supported on ${::osfamily}") }
   }
 }
